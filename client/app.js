@@ -8,7 +8,7 @@
 
     let userName;
 
-    login = event => {
+    const login = event => {
         event.preventDefault();
         if(userNameInput.value.length > 0) {
             userName = userNameInput.value;
@@ -19,7 +19,7 @@
         }
     }
 
-    sendMessage = event => {
+    const sendMessage = event => {
         event.preventDefault();
         if(messageContentInput.value.length > 0) {
             addMessage(userName, messageContentInput.value);
@@ -29,7 +29,7 @@
         }
     }
 
-    addMessage = (user, message) => {
+    const addMessage = (user, message) => {
         const domMessage = document.createElement('li');
         user !== userName ? domMessage.classList.add('message','message--received') : domMessage.classList.add('message','message--received','message--self');
         domMessage.innerHTML = `<h3 class="message__author">${user === userName ? 'You' : user}</h3><div class="message__content">${message}</div>`;
