@@ -11,6 +11,7 @@
 
     socket.on('message', ({ user, message }) => addMessage(user, message));
     socket.on('addNewUser', ({user, message}) => addMessage(user, message));
+    socket.on('removeUser', ({user, message}) => addMessage(user, message));
 
     const login = event => {
         event.preventDefault();
