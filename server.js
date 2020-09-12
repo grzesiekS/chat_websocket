@@ -38,7 +38,9 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         const removedUser = users.filter(user => user.id === socket.id)[0];
         users.splice(users.indexOf(removedUser),1);
-        socket.broadcast.emit('removeUser', {user: 'ChatBot', message: `${removedUser.user} has left the conversation!`});
+        if(removedUser !== undefined) {
+            socket.broadcast.emit('removeUser', {user: 'ChatBot', message: `${removedUser.user} has left the conversation!`});
+        }
         console.log(`I've deleted user with id: ${socket.id}`);
     });
 });
