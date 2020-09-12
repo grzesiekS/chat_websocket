@@ -15,6 +15,7 @@
         event.preventDefault();
         if(userNameInput.value.length > 0) {
             userName = userNameInput.value;
+            socket.emit('login', {user: userName});
             loginForm.classList.remove('show');
             messageSection.classList.add('show');
         } else {

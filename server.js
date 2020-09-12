@@ -7,6 +7,8 @@ const messages = [
     {user: 'Steven', message: 'Hello! How are You?'}
 ];
 
+const users = [];
+
 const app = express();
 
 // Serve static files from the React app
@@ -23,9 +25,17 @@ const server = app.listen(8000, () => {
 const io = socket(server);
 
 io.on('connection', (socket) => {
+    socket.on('login', (user) => {
+        users.push({...user, id: socket.id});
+        console.log(`New user: ${user.user} id: ${socket.id}`);
+    });
+
     socket.on('message', (message) => {
         messages.push(message);
         socket.broadcast.emit('message', message);
     });
-    // socket.on('disconnect', () => { console.log('Oh, socket ' + socket.id + ' has left') });
+    socket.on('disconnect', () => {
+        users.splice(users.indexOf(users.filter(user => user.id === socket.id)[0]),1);
+        console.log(`I've deleted user with id: ${socket.id}`);
+    });
 });
