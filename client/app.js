@@ -10,6 +10,7 @@
     let userName;
 
     socket.on('message', ({ user, message }) => addMessage(user, message));
+    socket.on('addNewUser', ({user, message}) => addMessage(user, message));
 
     const login = event => {
         event.preventDefault();
@@ -36,7 +37,14 @@
 
     const addMessage = (user, message) => {
         const domMessage = document.createElement('li');
-        user !== userName ? domMessage.classList.add('message','message--received') : domMessage.classList.add('message','message--received','message--self');
+        if(user === userName) {
+            domMessage.classList.add('message','message--received','message--self');
+        } else if (user === 'ChatBot') {
+            domMessage.classList.add('message','message--received', 'message--bot');
+        } else {
+            domMessage.classList.add('message','message--received');
+        }
+
         domMessage.innerHTML = `<h3 class="message__author">${user === userName ? 'You' : user}</h3><div class="message__content">${message}</div>`;
         messagesList.appendChild(domMessage);
     }

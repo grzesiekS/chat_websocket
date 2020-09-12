@@ -27,6 +27,7 @@ const io = socket(server);
 io.on('connection', (socket) => {
     socket.on('login', (user) => {
         users.push({...user, id: socket.id});
+        socket.broadcast.emit('addNewUser', {user: 'ChatBot', message: `${user.user} has joined the conversation!`});
         console.log(`New user: ${user.user} id: ${socket.id}`);
     });
 
