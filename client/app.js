@@ -9,7 +9,7 @@
 
     let userName;
 
-    socket('message', ({ user, message }) => addMessage(user. message));
+    socket.on('message', ({ user, message }) => addMessage(user, message));
 
     const login = event => {
         event.preventDefault();
